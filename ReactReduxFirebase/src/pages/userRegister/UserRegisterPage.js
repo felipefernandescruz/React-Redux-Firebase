@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   Container,
-  Header,
   Content,
   Form,
   Item,
@@ -22,7 +21,8 @@ import {
 const mapStateToProps = state => ({
   name: state.UserRegisterReducer.name,
   email: state.UserRegisterReducer.email,
-  password: state.UserRegisterReducer.password
+  password: state.UserRegisterReducer.password,
+  errorRegister: state.UserRegisterReducer.errorRegister
 });
 
 import styles from "./UserRegisterStyle";
@@ -41,6 +41,7 @@ export class UserRegisterPage extends Component {
                   value={this.props.name}
                 />
               </Item>
+
               <Item floatingLabel last>
                 <Label>Email</Label>
                 <Input
@@ -49,6 +50,7 @@ export class UserRegisterPage extends Component {
                   keyboardType="email-address"
                 />
               </Item>
+
               <Item floatingLabel last>
                 <Label>Senha</Label>
                 <Input
@@ -58,6 +60,9 @@ export class UserRegisterPage extends Component {
                   secureTextEntry={true}
                 />
               </Item>
+              <Text style={styles.errorMessage}>
+                {this.props.errorRegister}
+              </Text>
 
               <Button
                 block

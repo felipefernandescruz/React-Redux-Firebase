@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+
 import { firebaseConnect } from "./providers/firebaseProvider/firebaseProvider";
+import ReduxThunk from "redux-thunk";
 
 import Routes from "./routes";
 import reducers from "./reducers";
@@ -13,7 +15,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={createStore(reducers)}>
+      <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
         <Routes />
       </Provider>
     );

@@ -1,16 +1,16 @@
-export const EMAIL_INPUT = "EMAIL_INPUT";
-export const PASSWORD_INPUT = "PASSWORD_INPUT";
+export const LOGIN_EMAIL_INPUT = "LOGIN_EMAIL_INPUT";
+export const LOGIN_PASSWORD_INPUT = "LOGIN_PASSWORD_INPUT";
 
 export const emailInput = text => {
   return {
-    type: EMAIL_INPUT,
+    type: LOGIN_EMAIL_INPUT,
     payload: text
   };
 };
 
 export const passwordInput = text => {
   return {
-    type: PASSWORD_INPUT,
+    type: LOGIN_PASSWORD_INPUT,
     payload: text
   };
 };

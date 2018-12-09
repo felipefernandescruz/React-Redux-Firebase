@@ -13,6 +13,10 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 10,
     backgroundColor: "#ff8c00"
+  },
+  errorMessage: {
+    color: "#ff0000",
+    fontSize: 18
   }
 });
 
