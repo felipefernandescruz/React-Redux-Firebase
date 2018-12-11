@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Container,
   Content,
@@ -10,61 +10,85 @@ import {
   Text,
   Label
 } from "native-base";
-import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
-import { emailInput, passwordInput } from "./LoginActions";
+
+import {
+  emailInput,
+  passwordInput,
+  onLoginClick,
+  onUserRegisterClick,
+  googleLogin,
+  loginFacebook
+} from "./LoginActions";
 import styles from "./LoginStyle";
 
 const mapStateToProps = state => ({
   email: state.LoginReducer.email,
-  password: state.LoginReducer.password
+  password: state.LoginReducer.password,
+  erroLogin: state.LoginReducer.erroLogin
 });
 
-const LoginPage = props => {
-  return (
-    <Container style={styles.Container}>
-      <Content>
-        <Card>
-          <Form>
-            <Item floatingLabel>
-              <Label>Email</Label>
-              <Input
-                value={props.email}
-                onChangeText={text => props.emailInput(text)}
-                keyboardType="email-address"
-              />
-            </Item>
-            <Item floatingLabel last>
-              <Label>Senha</Label>
-              <Input
-                value={props.password}
-                onChangeText={text => props.passwordInput(text)}
-                style={styles.input}
-                secureTextEntry={true}
-              />
-            </Item>
+export class LoginPage extends Component {
+  render() {
+    return (
+      <Container style={styles.Container}>
+        <Content>
+          <Card>
+            <Form>
+              <Item floatingLabel>
+                <Label>Email</Label>
+                <Input
+                  value={this.props.email}
+                  onChangeText={text => this.props.emailInput(text)}
+                  keyboardType="email-address"
+                />
+              </Item>
+              <Item floatingLabel last>
+                <Label>Senha</Label>
+                <Input
+                  value={this.props.password}
+                  onChangeText={text => this.props.passwordInput(text)}
+                  style={styles.input}
+                  secureTextEntry={true}
+                />
+              </Item>
+              <Text style={styles.errorMessage}>{this.props.erroLogin}</Text>
 
-            <Button block style={styles.button}>
-              <Text>ENTRAR</Text>
-            </Button>
-            <Button style={styles.buttonFacebook} block>
-              <Text>ENTRAR COM FACEBOOK</Text>
-            </Button>
-            <Button
-              style={styles.button}
-              block
-              onPress={() => Actions.userRegister()}
-            >
-              <Text>CADASTRAR</Text>
-            </Button>
-          </Form>
-        </Card>
-      </Content>
-    </Container>
-  );
-};
+              <Button
+                block
+                style={styles.button}
+                onPress={() =>
+                  this.props.onLoginClick(({ email, password } = this.props))
+                }
+              >
+                <Text>ENTRAR</Text>
+              </Button>
+              <Button
+                style={styles.buttonFacebook}
+                block
+                onPress={() => onUserRegisterClick()}
+              >
+                <Text>CADASTRAR</Text>
+              </Button>
+              <Button style={styles.button} block onPress={() => googleLogin()}>
+                <Text>ENTRAR COM GOOGLE</Text>
+              </Button>
+              <Button
+                style={styles.buttonFacebook}
+                block
+                onPress={() => loginFacebook()}
+              >
+                <Text>ENTRAR COM FACEBOOK</Text>
+              </Button>
+            </Form>
+          </Card>
+        </Content>
+      </Container>
+    );
+  }
+}
 
 export default connect(
   mapStateToProps,
-  { emailInput, passwordInput }
+  { emailInput, passwordInput, onLoginClick }
 )(LoginPage);
